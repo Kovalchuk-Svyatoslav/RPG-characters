@@ -1,0 +1,128 @@
+[
+  {
+    "name": "Nevermore",
+    "race": "Human",
+    "class": "Knight",
+    "guild": null,
+    "level": 12,
+    "basic_characteristics": {
+      "health_points": 538,
+      "mana": 267,
+      "damage": 44,
+      "armor": 4,
+      "attack_speed": 1.6,
+      "movement_speed": 305
+    },
+    "inventory": [
+      {
+        "name": "Steel sword",
+        "equipped": true,
+        "damage": 30,
+        "attack_speed": 0.4
+      },
+      {
+        "name": "Steel boots",
+        "equipped": true,
+        "movement_speed": -15,
+        "armor": 2
+      },
+      {
+        "name": "Steel pants",
+        "equipped": true,
+        "movement_speed": -25,
+        "armor": 4
+      },
+      {
+        "name": "Steel breastplate",
+        "equipped": true,
+        "movement_speed": -30,
+        "armor": 5
+      },
+      {
+        "name": "Steel helmet",
+        "equipped": true,
+        "movement_speed": -10,
+        "armor": 3
+      },
+      {
+        "name": "Golden ring",
+        "equipped": false
+      },
+      {
+        "name": "Map",
+        "ability": "Allows you to navigate the terrain"
+      },
+      {
+        "name": "Health potion",
+        "ability": "Restores 50 health"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Rage",
+        "ability": "Increases attack speed by 100%, increases damage by 50%, and movement speed by 35% for 15 seconds",
+        "cooldown": 50
+      }
+    ]
+  },
+  {
+    "name": "Elara",
+    "race": "Elf",
+    "class": "Mage",
+    "guild": "Silver Moon",
+    "level": 8,
+    "basic_characteristics": {
+      "health_points": 210,
+      "mana": 512,
+      "damage": 15,
+      "armor": 0,
+      "attack_speed": 1.2,
+      "movement_speed": 320
+    },
+    "inventory": [
+      {
+        "name": "Staff of Fire",
+        "equipped": true,
+        "damage": 15,
+        "effect": "Deals 5 health per second for 10 seconds",
+        "attack_speed": 0.4
+      },
+      {
+        "name": "Leather boots",
+        "equipped": true,
+        "movement_speed": 10,
+        "armor": 0.5
+      },
+      {
+        "name": "Leather pants",
+        "equipped": true,
+        "armor": 4
+      },
+      {
+        "name": "Cloak of invisibility",
+        "equipped": true,
+        "mana": 40,
+        "ability": "Makes you invisible"
+      },
+      {
+        "name": "Scroll of fireball",
+        "ability": "Launches a fireball that deals 112 damage in a large area, and then deals 10 damage per second for 15 seconds."
+      },
+      {
+        "name": "Map",
+        "ability": "Allows you to navigate the terrain"
+      },
+      {
+        "name": "Mana potion",
+        "ability": "Restores 50 mana"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Lightning",
+        "ability": "Launches a lightning bolt that deals 75 damage",
+        "cooldown": 35
+      }
+    ]
+  }
+]
