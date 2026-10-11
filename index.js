@@ -70,5 +70,27 @@ program
     });
   });
 
+// Команда 2: Виведення одного елемента (Загальна можливість 2)
+program
+  .command('character <name>')
+  .description('Виводить повну інформацію про конкретного персонажа за його іменем')
+  .action((name, options) => {
+
+    const data = readData();
+
+    // Пошук персонажа в масиві (ігноруємо великі/малі літери для зручності)
+    const character = data.find(char => char.name.toLowerCase() === name.toLowerCase());
+
+    // Обробка помилки, якщо персонаж не знайдено
+    if (!character) {
+      console.error(`Помилка: Персонажа з іменем "${name}" не знайдено.`);
+      process.exit(1);
+    }
+
+    // Виведення всього об'єкту цілком
+    console.log(`--- Повні дані персонажа: ${character.name} ---`);
+    console.log(JSON.stringify(character, null, 2));
+  });
+
 // Парсинг аргументів командного рядка
 program.parse(process.argv);
