@@ -92,5 +92,51 @@ program
     console.log(JSON.stringify(character, null, 2));
   });
 
+// Команда 3: Виведення значення окремого поля (Загальна можливість 3)
+program
+  .command('field <name> <path>')
+  .description('Виводить значення окремого поля персонажа (вкладені поля вказуйте через крапку, напр.: basic_characteristics.damage)')
+  .action((name, path) => {
+    const data = readData();
+    const character = data.find(char => char.name.toLowerCase() === name.toLowerCase());
+
+    if (!character) {
+      console.error(`Помилка: Персонажа з іменем "${name}" не знайдено.`);
+      process.exit(1);
+    }
+
+    // Розбивання шляху на частини (наприклад, "basic_characteristics.damage" -> ["basic_characteristics", "damage"])
+    const keys = path.split('.');
+    let currentValue = character;
+    let fieldExists = true;
+
+    // Проходимось по кожному слову в шляху
+    for (const key of keys) {
+      // Перевірка, чи ми працюємо з об'єктом і чи існує в ньому такий ключ
+      if (currentValue !== null && typeof currentValue === 'object' && key in currentValue) {
+        currentValue = currentValue[key]; // Заглиблюємось далі
+      } else {
+        fieldExists = false;
+        break; // Зупинка пошуку
+      }
+    }
+
+    // Обробка результату (різниця між відсутнім полем і null)
+    if (!fieldExists) {
+      console.error(`Помилка: Поле "${path}" взагалі не існує у персонажа "${character.name}".`);
+      process.exit(1);
+    }
+
+    if (currentValue === null) {
+      console.log(`Поле "${path}" існує, але воно порожнє (null).`);
+    } else if (typeof currentValue === 'object') {
+      // Якщо поле містить цілий об'єкт або масив (наприклад, inventory)
+      console.log(`Значення поля "${path}":\n${JSON.stringify(currentValue, null, 2)}`);
+    } else {
+      // Якщо це звичайне число або текст
+      console.log(`Значення поля "${path}": ${currentValue}`);
+    }
+  });
+
 // Парсинг аргументів командного рядка
 program.parse(process.argv);
