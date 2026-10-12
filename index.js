@@ -160,5 +160,49 @@ program
     console.log(JSON.stringify(character.basic_characteristics, null, 2));
   });
 
+// Команда 5: Інвентар персонажа (Варіант 8, можливість 2)
+program
+  .command('inventory <name>')
+  .description('Виводить інвентар персонажа з можливістю фільтрації')
+  .option('-e, --equipped', 'показати лише ті предмети, які зараз одягнені')
+  .option('-p, --purpose <keyword>', 'відфільтрувати за призначенням (пошук по назві або властивостях)')
+  .action((name, options) => {
+    const data = readData();
+    const character = data.find(char => char.name.toLowerCase() === name.toLowerCase());
+
+    if (!character) {
+      console.error(`Помилка: Персонажа з іменем "${name}" не знайдено.`);
+      process.exit(1);
+    }
+
+    let items = character.inventory;
+
+    // Фільтр за екіпіруванням
+    if (options.equipped) {
+      items = items.filter(item => item.equipped === true);
+    }
+
+    // Фільтр за призначенням
+    if (options.purpose) {
+      const keyword = options.purpose.toLowerCase();
+      
+      items = items.filter(item => {
+        // Пошук ключового слова в назві, полі ability або effect
+        const matchName = item.name && item.name.toLowerCase().includes(keyword);
+        const matchAbility = item.ability && item.ability.toLowerCase().includes(keyword);
+        const matchEffect = item.effect && item.effect.toLowerCase().includes(keyword);
+        
+        return matchName || matchAbility || matchEffect;
+      });
+    }
+
+    console.log(`--- Інвентар: ${character.name} ---`);
+    if (items.length === 0) {
+      console.log('За вашими критеріями предметів не знайдено.');
+    } else {
+      console.log(JSON.stringify(items, null, 2));
+    }
+  });
+
 // Парсинг аргументів командного рядка
 program.parse(process.argv);
