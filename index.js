@@ -138,5 +138,27 @@ program
     }
   });
 
+// Команда 4: Характеристики персонажа (Варіант 8, можливість 1)
+program
+  .command('stats <name>')
+  .description('Виводить рівень та базові характеристики обраного персонажа')
+  .action((name) => {
+    const data = readData();
+    
+    // Пошук персонажа
+    const character = data.find(char => char.name.toLowerCase() === name.toLowerCase());
+
+    if (!character) {
+      console.error(`Помилка: Персонажа з іменем "${name}" не знайдено.`);
+      process.exit(1);
+    }
+
+    // Виведення рівня та базових характеристик
+    console.log(`--- Статистика: ${character.name} ---`);
+    console.log(`Рівень персонажа: ${character.level}`);
+    console.log('Базові характеристики:');
+    console.log(JSON.stringify(character.basic_characteristics, null, 2));
+  });
+
 // Парсинг аргументів командного рядка
 program.parse(process.argv);
