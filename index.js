@@ -204,5 +204,49 @@ program
     }
   });
 
+// Команда 6: Навички персонажа (Варіант 8, можливість 3)
+program
+  .command('skills <name>')
+  .description('Виводить список навичок персонажа з можливістю пошуку')
+  .option('-s, --search <word>', 'знайти навичку за ключовим словом у назві або описі (ability)')
+  .action((name, options) => {
+    const data = readData();
+    const character = data.find(char => char.name.toLowerCase() === name.toLowerCase());
+
+    if (!character) {
+      console.error(`Помилка: Персонажа з іменем "${name}" не знайдено.`);
+      process.exit(1);
+    }
+
+    let skills = character.skills;
+
+    // Перевірка: чи існує масив навичок і чи він не порожній
+    if (!skills || skills.length === 0) {
+      console.log(`У персонажа "${character.name}" ще немає жодних навичок.`);
+      return;
+    }
+
+    // Фільтр за ключовим словом
+    if (options.search) {
+      const keyword = options.search.toLowerCase();
+      
+      // Шукаємо збіги в name або ability
+      skills = skills.filter(skill => {
+        const matchName = skill.name && skill.name.toLowerCase().includes(keyword);
+        const matchAbility = skill.ability && skill.ability.toLowerCase().includes(keyword);
+        
+        return matchName || matchAbility;
+      });
+    }
+
+    // Виведення результату
+    console.log(`--- Навички: ${character.name} ---`);
+    if (skills.length === 0) {
+      console.log(`Навичок із ключовим словом "${options.search}" не знайдено.`);
+    } else {
+      console.log(JSON.stringify(skills, null, 2));
+    }
+  });
+
 // Парсинг аргументів командного рядка
 program.parse(process.argv);
